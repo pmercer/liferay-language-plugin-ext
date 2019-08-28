@@ -4,7 +4,7 @@
 
 ## Overview
 
-Liferay Portal 6.1 Ext plugin that overrides Liferay's LanguageImpl.updateCookie method.
+Liferay Portal 6.1 Ext plugin that overrides Liferay's LanguageUtil.updateCookie method.
 
 Specifically, it adds a 2nd language_id cookie (GUEST_LANGUAGE_ID_EXT) with a parent domain of ".example.com".
 
