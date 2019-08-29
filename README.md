@@ -78,4 +78,4 @@ Should see the following messages in the server log at startup and/or when toggl
 
 ## Credit
 
-Many thanks to Minhchau Dang's helful guidance to my questions on the [RE: Liferay extending LanguageUtil.get() method](https://liferay.dev/forums/-/message_boards/message/114824750) Liferay dev forum.
+Many thanks to Minhchau Dang's helpful guidance to my questions on the *Liferay extending LanguageUtil.get() method* thread on the Liferay dev forum.
