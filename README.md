@@ -6,7 +6,34 @@
 
 Liferay Portal 6.1 Ext plugin that overrides Liferay's LanguageUtil.updateCookie method.
 
-Specifically, it adds a 2nd language_id cookie (GUEST_LANGUAGE_ID_EXT) with a parent domain of ".example.com".
+Specifically, it adds a 2nd language_id cookie (GUEST_LANGUAGE_ID_EXT) with a domain specified by the *session.cookie.domain* portal property.
+
+
+## Supported Products
+
+* Liferay Portal 6.1 EE GA2 (6.1.20+)
+
+
+## Configuration
+
+### Configure Portal Properties
+
+Add/update the following property in the plugin's [portal-ext.properties](docroot/WEB-INF/ext-impl/src/portal-ext.properties) file or in "LIFERAY_HOME/portal-ext.properties":
+
+| *Property* | *Description* |
+| :------------- | :------------- |
+| session.cookie.domain | Domain of the 2nd language_id cookie. |
+
+
+### Sample Portal Properties
+
+```
+#
+# The login process sets several cookies if persistent cookies are enabled.
+# Set this property to set the domain of those cookies.
+#
+session.cookie.domain=.example.com
+```
 
 
 ## Building
@@ -39,7 +66,7 @@ NOTE: Requires JDK 1.6+ and Liferay Portal Plugins SDK.
 
 ### Expected Results
 
-Should see the following messages in the server log at startup and when toggling between the different language icons in the Liferay language portlet:
+Should see the following messages in the server log at startup and/or when toggling between the different language icons in the Liferay language portlet:
 
 ```
 *** adding Cookie
@@ -48,15 +75,7 @@ Should see the following messages in the server log at startup and when toggling
 [name=GUEST_LANGUAGE_ID_EXT, value=en_US, domain=.example.com]
 ```
 
-### Actual Results
 
-Seeing the following ERROR message in the server log at startup:
+## Credit
 
-```
-ERROR [LiferayMethodExceptionEventHandler:34] java.lang.NullPointerException
-java.lang.NullPointerException
-        at com.example.LanguageResources._loadLocale(LanguageResources.java:155)
-        at com.example.LanguageResources.getMessage(LanguageResources.java:81)
-        at com.example.MyCustomLanguageImpl.get(MyCustomLanguageImpl.java:366)
-        at com.example.MyCustomLanguageImpl.get(MyCustomLanguageImpl.java:353)
-```
+Many thanks to Minhchau Dang's helful guidance to my questions on the [RE: Liferay extending LanguageUtil.get() method](https://liferay.dev/forums/-/message_boards/message/114824750) Liferay dev forum.

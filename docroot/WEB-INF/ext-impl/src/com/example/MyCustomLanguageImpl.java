@@ -26,11 +26,13 @@ import com.liferay.portal.kernel.util.JavaConstants;
 import com.liferay.portal.kernel.util.LocaleUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PropsKeys;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.ResourceBundleUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.kernel.util.Time;
 import com.liferay.portal.kernel.util.Validator;
+import com.liferay.portal.language.LanguageResources;
 import com.liferay.portal.model.CompanyConstants;
 import com.liferay.portal.model.Portlet;
 import com.liferay.portal.security.auth.CompanyThreadLocal;
@@ -44,10 +46,7 @@ import com.liferay.portal.util.PropsValues;
 import com.liferay.portal.util.WebKeys;
 import com.liferay.portlet.PortletConfigFactoryUtil;
 
-import com.liferay.portal.kernel.util.PropsUtil;
-
 import java.text.MessageFormat;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -60,7 +59,6 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import javax.portlet.PortletConfig;
 import javax.portlet.PortletRequest;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -634,16 +632,14 @@ public class MyCustomLanguageImpl implements Language {
 
 		CookieKeys.addCookie(request, response, languageIdCookie);
 
-		// add a 2nd languageId cookie
+		// add a 2nd languageId cookie with a domain specified by the SESSION_COOKIE_DOMAIN portal property
 		
 		languageIdCookie = new Cookie(
 				CookieKeys.GUEST_LANGUAGE_ID+"_EXT", languageId);
 
 		languageIdCookie.setPath(StringPool.SLASH);
 		languageIdCookie.setMaxAge(CookieKeys.MAX_AGE);
-		
-		//languageIdCookie.setDomain(CookieKeys.getDomain(request));
-		languageIdCookie.setDomain(".example.com");
+		languageIdCookie.setDomain(PropsUtil.get(PropsKeys.SESSION_COOKIE_DOMAIN));
 
 		debug("*** adding Cookie");
 		debug(String.format("[name=%s, value=%s, domain=%s]", languageIdCookie.getName(), languageIdCookie.getValue(), languageIdCookie.getDomain()));
